@@ -2,7 +2,7 @@ package com.machinedoll.projectdemo.source
 
 import java.util.Calendar
 
-import com.machinedoll.projectdemo.entity.GDELTDownloadReference
+import com.machinedoll.projectdemo.schema.GDELTReferenceLink
 
 import com.typesafe.config.Config
 import org.apache.flink.streaming.api.functions.source.SourceFunction
@@ -10,7 +10,7 @@ import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceCont
 
 import scala.io.Source
 
-class GDELTLinkSource(config: Config) extends CustomBatchSource[GDELTDownloadReference] with Serializable {
+class GDELTLinkSource(config: Config) extends CustomBatchSource[GDELTReferenceLink] with Serializable {
   def getLatestReferenceLink(downloadLink: String)  =
     Source
       .fromURL(downloadLink)
@@ -20,14 +20,14 @@ class GDELTLinkSource(config: Config) extends CustomBatchSource[GDELTDownloadRef
       .map(instance => {
         instance.split("\\s").toList
       })
-      .map(ref => GDELTDownloadReference(ref(0).toDouble, ref(1), ref(2), Calendar.getInstance.getTimeInMillis.toString))
+      .map(ref => GDELTReferenceLink(ref(0).toDouble, ref(1), ref(2), Calendar.getInstance.getTimeInMillis.toString))
 
-  override def getSource: SourceFunction.SourceContext[GDELTDownloadReference] => Unit = {
-    sc: SourceContext[GDELTDownloadReference] => {
+  override def getSource: SourceFunction.SourceContext[GDELTReferenceLink] => Unit = {
+    sc: SourceContext[GDELTReferenceLink] => {
       while (true) {
         val downloadLink = config.getString("gdelt.last_15_minus_reference")
-        val dgeltDownloadReferenceList = getLatestReferenceLink(downloadLink)
-        dgeltDownloadReferenceList.map(
+        val dgeltReferenceLinkList = getLatestReferenceLink(downloadLink)
+        dgeltReferenceLinkList.map(
           refEntity => sc.collect(refEntity)
         )
         Thread.sleep(config.getInt("gdelt.interval"))

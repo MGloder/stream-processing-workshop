@@ -20,14 +20,14 @@ object ReferenceLinkDownloader {
 
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 
-    val GDETLSink = new PravegaSink(conf, ParameterTool.fromArgs(args)).getCustomSink()
+//    val GDETLSink = new PravegaSink(conf, ParameterTool.fromArgs(args)).getCustomSink()
 
     val GDETLSource = new GDELTLinkSource(conf)
 
 
     env
       .addSource(GDETLSource.getSource)
-      .addSink(GDETLSink)
+      .print()
       .setParallelism(2)
 
 
