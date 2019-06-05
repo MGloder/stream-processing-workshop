@@ -1,7 +1,7 @@
-package com.machinedoll.wonderland.jobs
+package com.machinedoll.projectdemo.jobs
 
-import com.machinedoll.wonderland.sink.PravegaSink
-import com.machinedoll.wonderland.source.GDELTLinkSource
+import com.machinedoll.projectdemo.sink.PravegaSink
+import com.machinedoll.projectdemo.source.GDELTLinkSource
 import com.typesafe.config.ConfigFactory
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.java.utils.ParameterTool

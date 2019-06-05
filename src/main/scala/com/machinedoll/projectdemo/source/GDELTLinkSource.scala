@@ -1,8 +1,8 @@
-package com.machinedoll.wonderland.source
+package com.machinedoll.projectdemo.source
 
 import java.util.Calendar
 
-import com.machinedoll.wonderland.entity.GDELTDownloadReference
+import com.machinedoll.projectdemo.entity.GDELTDownloadReference
 
 import com.typesafe.config.Config
 import org.apache.flink.streaming.api.functions.source.SourceFunction

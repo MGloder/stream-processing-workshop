@@ -1,4 +1,4 @@
-package com.machinedoll.wonderland.source
+package com.machinedoll.projectdemo.source
 
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 

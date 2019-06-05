@@ -1,4 +1,4 @@
-package com.machinedoll.wonderland.sink
+package com.machinedoll.projectdemo.sink
 
 import com.typesafe.config.Config
 import io.pravega.connectors.flink.FlinkPravegaWriter

@@ -1,9 +1,9 @@
-package com.machinedoll.wonderland.sink
+package com.machinedoll.projectdemo.sink
 import java.net.URI
 
-import com.machinedoll.wonderland.conf.pravega.{Constants, IntegerEvent}
-import com.machinedoll.wonderland.entity.GDELTDownloadReference
-import com.machinedoll.wonderland.utils.Pravega
+import com.machinedoll.projectdemo.conf.pravega.{Constants, IntegerEvent}
+import com.machinedoll.projectdemo.entity.GDELTDownloadReference
+import com.machinedoll.projectdemo.utils.Pravega
 import com.typesafe.config.Config
 import io.pravega.connectors.flink.serialization.PravegaSerialization
 import io.pravega.connectors.flink.{FlinkPravegaWriter, PravegaConfig, PravegaEventRouter, PravegaWriterMode}

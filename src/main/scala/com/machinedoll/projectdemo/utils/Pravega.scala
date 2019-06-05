@@ -1,4 +1,4 @@
-package com.machinedoll.wonderland.utils
+package com.machinedoll.projectdemo.utils
 
 import io.pravega.client.admin.StreamManager
 import io.pravega.client.stream.{Stream, StreamConfiguration}

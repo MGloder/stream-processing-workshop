@@ -1,4 +1,4 @@
-package com.machinedoll.wonderland.conf.pravega
+package com.machinedoll.projectdemo.conf.pravega
 
 object Constants {
   val SCOPE_PARAM: String = "scope"

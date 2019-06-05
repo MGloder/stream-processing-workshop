@@ -1,4 +1,4 @@
-package com.machinedoll.wonderland.conf.pravega
+package com.machinedoll.projectdemo.conf.pravega
 
 class IntegerEvent(v: Long) extends Serializable {
   val start: Long = -1
