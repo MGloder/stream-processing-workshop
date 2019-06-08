@@ -1,11 +1,11 @@
 # Stream-processing-workshop
 
 ## Current Status
-- [ ] Reference Link Downloader
+- [x] Reference Link Downloader
     - [x] Download reference link for every 15 mins
-    - [ ] Save data to Pravega platform
+    - [x] Save data to Pravega platform
 - [ ] GDELT Raw Data Downloader
-    - [ ] Read data from Pravega platform 
+    - [x] Read data from Pravega platform 
     - [ ] Download raw data
     - [ ] Save data back to pravega
 - [ ] A Simple Data Consumer

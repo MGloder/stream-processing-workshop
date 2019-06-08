@@ -26,7 +26,6 @@ class GDELTLinkSource(config: Config) extends CustomBatchSource[GDELTReferenceLi
     sc: SourceContext[GDELTReferenceLink] => {
       while (true) {
         val downloadLink = config.getString("gdelt.last_15_minus_reference")
-        println(downloadLink)
         val dgeltReferenceLinkList = getLatestReferenceLink(downloadLink)
         dgeltReferenceLinkList.map(
           refEntity => sc.collect(refEntity)

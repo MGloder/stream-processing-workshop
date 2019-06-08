@@ -1,5 +1,6 @@
 package com.machinedoll.projectdemo.jobs;
 
+import com.machinedoll.projectdemo.schema.GDELTReferenceLink;
 import io.pravega.client.stream.Stream;
 import io.pravega.connectors.flink.FlinkPravegaReader;
 import io.pravega.connectors.flink.PravegaConfig;
@@ -53,18 +54,18 @@ public class WordCountReader {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // create the Pravega source to read a stream of text
-        FlinkPravegaReader<String> source = FlinkPravegaReader.<String>builder()
+        FlinkPravegaReader<GDELTReferenceLink> source = FlinkPravegaReader.<GDELTReferenceLink>builder()
                 .withPravegaConfig(pravegaConfig)
                 .forStream(stream)
-                .withDeserializationSchema(PravegaSerialization.deserializationFor(String.class))
+                .withDeserializationSchema(PravegaSerialization.deserializationFor(GDELTReferenceLink.class))
                 .build();
 
         // count each word over a 10 second time period
-        DataStream<WordCount> dataStream = env.addSource(source).name("Pravega Stream")
-                .flatMap(new WordCountReader.Splitter())
-                .keyBy("word")
-                .timeWindow(Time.seconds(10))
-                .sum("count");
+        DataStream<GDELTReferenceLink> dataStream = env.addSource(source).name("Pravega Stream");
+//                .flatMap(new WordCountReader.Splitter())
+//                .keyBy("word")
+//                .timeWindow(Time.seconds(10))
+//                .sum("count");
 
         // create an output sink to print to stdout for verification
         dataStream.print();
@@ -76,13 +77,13 @@ public class WordCountReader {
     }
 
     // split data into word by space
-    private static class Splitter implements FlatMapFunction<String, WordCount> {
-        @Override
-        public void flatMap(String line, Collector<WordCount> out) throws Exception {
-            for (String word: line.split(Constants.WORD_SEPARATOR)) {
-                out.collect(new WordCount(word, 1));
-            }
-        }
-    }
+//    private static class Splitter implements FlatMapFunction<GDELTReferenceLink> {
+//        @Override
+//        public void flatMap(String line, Collector<WordCount> out) throws Exception {
+//            for (String word: line.split(Constants.WORD_SEPARATOR)) {
+//                out.collect(new WordCount(word, 1));
+//            }
+//        }
+//    }
 
 }

@@ -5,7 +5,6 @@ import com.machinedoll.projectdemo.source.GDELTLinkSource
 import com.typesafe.config.ConfigFactory
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.java.utils.ParameterTool
-import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.api.scala._
 import org.slf4j.LoggerFactory
@@ -25,11 +24,8 @@ object ReferenceLinkDownloader {
     log.info("Starting query Reference Link and Save to Pravega platform...")
     env
       .addSource(GDETLSource.getSource)
-//      .print()
       .addSink(GDETLSink)
       .name("GDETL Reference Link")
-
-//    env.addSource(GDETLSource.getSource).print().name("STDOUT")
 
     env.execute("Example Pravega")
   }
