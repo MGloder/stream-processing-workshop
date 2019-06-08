@@ -14,11 +14,8 @@ object ReferenceLinkDownloader {
   def main(args: Array[String]): Unit = {
     val log = LoggerFactory.getLogger(ReferenceLinkDownloader.getClass)
 //    Setting up flink env
-    val checkPointIntervalMillis: Long = 60 * 15 * 1000
     val conf = ConfigFactory.load
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
-    env.enableCheckpointing(checkPointIntervalMillis, CheckpointingMode.EXACTLY_ONCE)
-        .setParallelism(1)
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 
 //    Setting up Pravega env
@@ -28,10 +25,11 @@ object ReferenceLinkDownloader {
     log.info("Starting query Reference Link and Save to Pravega platform...")
     env
       .addSource(GDETLSource.getSource)
+//      .print()
       .addSink(GDETLSink)
       .name("GDETL Reference Link")
 
-    env.addSource(GDETLSource.getSource).print().name("STDOUT")
+//    env.addSource(GDETLSource.getSource).print().name("STDOUT")
 
     env.execute("Example Pravega")
   }

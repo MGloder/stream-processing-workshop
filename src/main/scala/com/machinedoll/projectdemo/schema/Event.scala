@@ -1,6 +1,6 @@
 package com.machinedoll.projectdemo.schema
 
-case class GDELTReferenceLink(toDouble: Double, value: Any, value1: Any, time: String)
+case class GDELTReferenceLink(toDouble: Double, value: String, value1: String, time: String)
 
 case class GDELTRawData(GLOBALEVENTID: Int,
                         SQLDATE: Int,
