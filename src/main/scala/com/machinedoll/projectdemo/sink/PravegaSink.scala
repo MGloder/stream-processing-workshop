@@ -11,21 +11,9 @@ import io.pravega.connectors.flink.{FlinkPravegaWriter, PravegaConfig, PravegaEv
 import org.apache.flink.api.common.time.Time
 import org.apache.flink.api.java.utils.ParameterTool
 
-class PravegaSink(config: Config, params: ParameterTool) extends StreamCustomSink[GDELTReferenceLink] {
-  private val txnLeaseRenewalPeriod: Time = Time.milliseconds(30 * 1000)
-
+class GDELTReferenceLinkPravegaSink(config: Config, params: ParameterTool) extends
+  StreamCustomSink[GDELTReferenceLink](params: ParameterTool){
   override def getCustomSink(): FlinkPravegaWriter[GDELTReferenceLink] = {
-    val exactlyOnce: Boolean = params.get("exactly_once", "true").toBoolean
-    val pravegaConfig = PravegaConfig
-      .fromParams(params)
-      .withControllerURI(URI.create(params.get(Constants.DEFAUTL_URI_PARAM, Constants.DEFAULT_URI)))
-      .withDefaultScope(params.get(Constants.SCOPE_PARAM, Constants.DEFAULT_SCOPE))
-
-    val stream = Pravega.createStream(
-      pravegaConfig,
-      params.get(Constants.STREAM_PARAM, Constants.DEFAULT_STREAM),
-      StreamConfiguration.builder().scalingPolicy(ScalingPolicy.fixed(1)).build())
-
     FlinkPravegaWriter
       .builder[GDELTReferenceLink]
       .withPravegaConfig(pravegaConfig)
