@@ -1,5 +1,7 @@
 package com.machinedoll.projectdemo.schema
 
+case class FileInfo(name: String, path: String, created: String) extends Serializable
+
 case class GDELTReferenceLink(size: Double, hash: String, url: String, time: String) extends Serializable
 
 case class GDELTRawData(GLOBALEVENTID: Int,
