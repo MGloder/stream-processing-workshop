@@ -2,8 +2,10 @@ package com.machinedoll.projectdemo.jobs
 
 import java.io.File
 import java.net.URL
+import java.util.Date
 
-import com.machinedoll.projectdemo.schema.GDELTReferenceLink
+import com.machinedoll.projectdemo.schema.{FileInfo, GDELTReferenceLink}
+import com.machinedoll.projectdemo.sink.GDELTZipFilePravegaSink
 import com.machinedoll.projectdemo.source.PravegaSource
 import com.typesafe.config.ConfigFactory
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
@@ -21,25 +23,25 @@ object GDELTRawDataDownloader {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
     val GDTELSource = new PravegaSource(conf, ParameterTool.fromArgs(args)).getCustomSource()
-//    val GDETLSink = new PravegaSink(conf, ParameterTool.fromArgs(args)).getCustomSink()
+    val GDETLSink = new GDELTZipFilePravegaSink(conf, ParameterTool.fromArgs(args)).getCustomSink()
     log.info("Starting query Reference Link and Save to Pravega platform...")
     env
       .addSource(GDTELSource)
       .map(requestRemoteData _)
-//      .addSink(GDETLSink)
+      .addSink(GDETLSink)
       .name("GDTEL reference link from Pravega")
 
     env.execute("Example Pravega")
 
   }
 
-  def requestRemoteData(target: GDELTReferenceLink): String = {
+  def requestRemoteData(target: GDELTReferenceLink): FileInfo = {
     //TODO need wait for the completion of the tmp file
     log.info("Download starting...")
     val filename = new File(target.url).getName
     val tmpFile = new File(s"/tmp/${filename}")
     val downloader = new URL(target.url) #> tmpFile
     downloader.run()
-    tmpFile.getAbsolutePath
+    new FileInfo(tmpFile.getName, tmpFile.getAbsolutePath, target.time)
   }
 }
