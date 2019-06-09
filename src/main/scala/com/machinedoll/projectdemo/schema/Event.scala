@@ -64,3 +64,5 @@ case class GDELTRawData(GLOBALEVENTID: Int,
                         DATEADDED: Int,
                         SOURCEURL: String)
 
+case class ExampleData(id: Int, name: String)
+
