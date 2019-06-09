@@ -6,7 +6,7 @@
     - [x] Save data to Pravega platform
 - [ ] GDELT Raw Data Downloader
     - [x] Read data from Pravega platform 
-    - [ ] Download raw data
+    - [x] Download raw data
     - [ ] Save data back to pravega
 - [ ] A Simple Data Consumer
     - [ ] Listen new data from pravega 
