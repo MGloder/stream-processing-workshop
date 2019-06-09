@@ -2,7 +2,7 @@ package com.machinedoll.projectdemo.source
 
 import java.util.Calendar
 
-import com.machinedoll.projectdemo.schema.{GDGDELTReferenceLink, GDELTReferenceLink}
+import com.machinedoll.projectdemo.schema.GDELTReferenceLink
 import com.typesafe.config.Config
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext

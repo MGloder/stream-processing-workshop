@@ -1,6 +1,6 @@
 package com.machinedoll.projectdemo.jobs
 
-import com.machinedoll.projectdemo.schema.{GDELTRawData, GDGDELTReferenceLink}
+import com.machinedoll.projectdemo.schema.{GDELTRawData, GDELTReferenceLink}
 import com.machinedoll.projectdemo.sink.PravegaSink
 import com.machinedoll.projectdemo.source.{GDELTLinkSource, PravegaSource}
 import com.typesafe.config.ConfigFactory
@@ -31,11 +31,11 @@ object GDELTRawDataDownloader {
 
   }
 
-  def RequestRemoteData(target: GDGDELTReferenceLink): String = {
+  def RequestRemoteData(target: GDELTReferenceLink): String = {
     // translate target to GDELTRaw Data
     // 1. Download the file
     Source
-      .fromURL(target.value)
+      .fromURL(target.url)
       .mkString
   }
 }

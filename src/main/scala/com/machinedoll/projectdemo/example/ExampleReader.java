@@ -1,6 +1,6 @@
 package com.machinedoll.projectdemo.example;
 import com.machinedoll.projectdemo.conf.pravega.Constants;
-import com.machinedoll.projectdemo.schema.GDGDELTReferenceLink;
+import com.machinedoll.projectdemo.schema.GDELTReferenceLink;
 import com.machinedoll.projectdemo.utils.Pravega;
 import io.pravega.client.stream.ScalingPolicy;
 import io.pravega.client.stream.Stream;
@@ -59,14 +59,14 @@ public class ExampleReader {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // create the Pravega source to read a stream of text
-        FlinkPravegaReader<GDGDELTReferenceLink> source = FlinkPravegaReader.<GDGDELTReferenceLink>builder()
+        FlinkPravegaReader<GDELTReferenceLink> source = FlinkPravegaReader.<GDELTReferenceLink>builder()
                 .withPravegaConfig(pravegaConfig)
                 .forStream(stream)
-                .withDeserializationSchema(PravegaSerialization.deserializationFor(GDGDELTReferenceLink.class))
+                .withDeserializationSchema(PravegaSerialization.deserializationFor(GDELTReferenceLink.class))
                 .build();
 
         // count each word over a 10 second time period
-        DataStream<GDGDELTReferenceLink> dataStream = env.addSource(source).name("Pravega Stream");
+        DataStream<GDELTReferenceLink> dataStream = env.addSource(source).name("Pravega Stream");
 //                .flatMap(new ExampleReader.Splitter());
 //                .keyBy("word")
 //                .timeWindow(Time.seconds(10));
@@ -82,12 +82,12 @@ public class ExampleReader {
     }
 
     // split data into word by space
-    private static class Splitter implements FlatMapFunction<String, GDGDELTReferenceLink> {
+    private static class Splitter implements FlatMapFunction<String, GDELTReferenceLink> {
         @Override
-        public void flatMap(String line, Collector<GDGDELTReferenceLink> out) throws Exception {
+        public void flatMap(String line, Collector<GDELTReferenceLink> out) throws Exception {
 
             for (String word: line.split(" ")) {
-                out.collect(new GDGDELTReferenceLink(1.0, "1", "1", new Date().toString()));
+                out.collect(new GDELTReferenceLink(1.0, "1", "1", new Date().toString()));
             }
         }
     }
