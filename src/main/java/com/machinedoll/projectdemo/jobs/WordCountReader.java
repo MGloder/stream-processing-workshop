@@ -6,6 +6,7 @@ import io.pravega.connectors.flink.FlinkPravegaReader;
 import io.pravega.connectors.flink.PravegaConfig;
 import io.pravega.connectors.flink.serialization.PravegaSerialization;
 import org.apache.flink.api.common.functions.FlatMapFunction;
+import org.apache.flink.api.common.serialization.DeserializationSchema;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
@@ -54,6 +55,7 @@ public class WordCountReader {
         final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         // create the Pravega source to read a stream of text
+
         FlinkPravegaReader<GDELTReferenceLink> source = FlinkPravegaReader.<GDELTReferenceLink>builder()
                 .withPravegaConfig(pravegaConfig)
                 .forStream(stream)
@@ -75,9 +77,8 @@ public class WordCountReader {
 
         LOG.info("Ending WordCountReader...");
     }
-
     // split data into word by space
-//    private static class Splitter implements FlatMapFunction<GDELTReferenceLink> {
+//    private static class Splitter implements FlatMapFunction<GDGDELTReferenceLink> {
 //        @Override
 //        public void flatMap(String line, Collector<WordCount> out) throws Exception {
 //            for (String word: line.split(Constants.WORD_SEPARATOR)) {

@@ -2,8 +2,7 @@ package com.machinedoll.projectdemo.source
 
 import java.util.Calendar
 
-import com.machinedoll.projectdemo.schema.GDELTReferenceLink
-
+import com.machinedoll.projectdemo.schema.{GDGDELTReferenceLink, GDELTReferenceLink}
 import com.typesafe.config.Config
 import org.apache.flink.streaming.api.functions.source.SourceFunction
 import org.apache.flink.streaming.api.functions.source.SourceFunction.SourceContext
@@ -26,8 +25,8 @@ class GDELTLinkSource(config: Config) extends CustomBatchSource[GDELTReferenceLi
     sc: SourceContext[GDELTReferenceLink] => {
       while (true) {
         val downloadLink = config.getString("gdelt.last_15_minus_reference")
-        val dgeltReferenceLinkList = getLatestReferenceLink(downloadLink)
-        dgeltReferenceLinkList.map(
+        val dgGDELTReferenceLinkList = getLatestReferenceLink(downloadLink)
+        dgGDELTReferenceLinkList.map(
           refEntity => sc.collect(refEntity)
         )
         Thread.sleep(config.getInt("gdelt.interval"))

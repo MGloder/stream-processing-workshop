@@ -1,6 +1,6 @@
 package com.machinedoll.projectdemo.schema
 
-case class GDELTReferenceLink(toDouble: Double, value: String, value1: String, time: String) extends Serializable
+case class GDELTReferenceLink(size: Double, hash: String, url: String, time: String) extends Serializable
 
 case class GDELTRawData(GLOBALEVENTID: Int,
                         SQLDATE: Int,
