@@ -22,7 +22,7 @@ Supported by Google Jigsaw, the GDELT Project monitors the world's broadcast, pr
 **(Copied from official website)**
 
 ## Workflow
-![](references/workflow.png)
+![](references/workflow2.png)
 
 ## Requirements
 ### Install and run Pravega

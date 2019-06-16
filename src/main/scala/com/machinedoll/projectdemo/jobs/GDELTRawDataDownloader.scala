@@ -24,6 +24,20 @@ object GDELTRawDataDownloader {
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
     val GDTELSource = new ReferenceLinkPravegaSource(conf, ParameterTool.fromArgs(args)).getCustomSource()
 //    val GDETLSink = new GDELTZipFilePravegaSink(conf, ParameterTool.fromArgs(args)).getCustomSink()
+    /**
+      * handle zip file
+      *
+      * 1. download zip file without stream:
+      *   1. use apache utils
+      *   2. use shell
+      * 2. unzip zip file
+      *   1. use shell
+      *   2. use java utils: refs: https://gist.github.com/Swind/2601206
+      *   3. unzip the file to memory https://potmat.wordpress.com/2017/07/04/unzip-a-file-to-memory-in-scala/
+      *   
+      */
+
+
     log.info("Starting query Reference Link and Save to Pravega platform...")
     env
       .addSource(GDTELSource)
