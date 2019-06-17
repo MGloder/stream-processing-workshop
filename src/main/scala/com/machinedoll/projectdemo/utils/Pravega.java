@@ -27,13 +27,13 @@ public class Pravega {
         // resolve the qualified name of the stream
         Stream stream = pravegaConfig.resolve(streamName);
 
-        try(StreamManager streamManager = StreamManager.create(pravegaConfig.getClientConfig())) {
+//        try(StreamManager streamManager = StreamManager.create(pravegaConfig.getClientConfig())) {
             // create the requested scope (if necessary)
-            streamManager.createScope(stream.getScope());
+//            streamManager.createScope(stream.getScope());
 
             // create the requested stream based on the given stream configuration
-            streamManager.createStream(stream.getScope(), stream.getStreamName(), streamConfig);
-        }
+//            streamManager.createStream(stream.getScope(), stream.getStreamName(), streamConfig);
+//        }
 
         return stream;
     }

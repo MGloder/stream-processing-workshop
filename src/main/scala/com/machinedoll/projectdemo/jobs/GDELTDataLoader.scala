@@ -28,20 +28,20 @@ object GDELTDataLoader {
   def main(args: Array[String]): Unit = {
     LOG.info("Starting WordCountReader...")
     // initialize the parameter utility tool in order to retrieve input parameters
-    val params = ParameterTool.fromArgs(args)
-    val pravegaConfig = PravegaConfig.fromParams(params)
-      .withDefaultScope("example")
+//    val params = ParameterTool.fromArgs(args)
+//    val pravegaConfig = PravegaConfig.fromParams(params)
+//      .withDefaultScope("example")
     // create the Pravega input stream (if necessary)
-    val stream = Pravega.createStream(pravegaConfig, Constants.DEFAULT_STREAM, StreamConfiguration.builder.scalingPolicy(ScalingPolicy.fixed(1)).build)
+//    val stream = Pravega.createStream(pravegaConfig, Constants.DEFAULT_STREAM, StreamConfiguration.builder.scalingPolicy(ScalingPolicy.fixed(1)).build)
     // initialize the Flink execution environment
-    val env = StreamExecutionEnvironment.getExecutionEnvironment
+//    val env = StreamExecutionEnvironment.getExecutionEnvironment
     // create the Pravega source to read a stream of text
-    val source = FlinkPravegaReader.builder[FileInfo].withPravegaConfig(pravegaConfig).forStream(stream).withDeserializationSchema(PravegaSerialization.deserializationFor(classOf[FileInfo])).build
+//    val source = FlinkPravegaReader.builder[FileInfo].withPravegaConfig(pravegaConfig).forStream(stream).withDeserializationSchema(PravegaSerialization.deserializationFor(classOf[FileInfo])).build
     // count each word over a 10 second time period
-    val dataStream = env.addSource(source).name("Pravega Stream")
-    dataStream.print
-    env.execute("GDELTDataLoader")
-    LOG.info("Ending GDELTDataLoader...")
+//    val dataStream = env.addSource(source).name("Pravega Stream")
+//    dataStream.print
+//    env.execute("GDELTDataLoader")
+//    LOG.info("Ending GDELTDataLoader...")
   }
 
   // split data into word by space
