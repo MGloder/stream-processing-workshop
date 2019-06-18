@@ -9,8 +9,8 @@
     - [x] Download raw data
     - [x] Save data back to pravega/kafka
 - [ ] A Simple Data Consumer
-    - [ ] Listen new data from pravega 
-    - [ ] Read data from pravega 
+    - [x] Listen new data from pravega/kafka 
+    - [x] Read data from pravega/kafka
     - [ ] Save data to Elasticsearch
 - [ ] Kibana & Elasticsearch 
     - [ ] Build index
@@ -22,7 +22,7 @@ Supported by Google Jigsaw, the GDELT Project monitors the world's broadcast, pr
 **(Copied from official website)**
 
 ## Workflow
-![](references/workflow2.png)
+![](references/workflow3.png)
 
 ## Requirements
 ### Install and run Pravega
