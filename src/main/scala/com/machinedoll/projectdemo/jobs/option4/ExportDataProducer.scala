@@ -12,8 +12,8 @@ import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
 
-object ExportData {
-  def LOG = LogFactory.getLog(ExportData.getClass)
+object ExportDataProducer {
+  def LOG = LogFactory.getLog(ExportDataProducer.getClass)
 
   def main(args: Array[String]): Unit = {
     LOG.info("Starting Download Export Data...")
@@ -40,7 +40,6 @@ object ExportData {
     )
 
     kafkaSink.setWriteTimestampToKafka(true)
-
 
     env
       .addSource(exportSource)
