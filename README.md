@@ -4,10 +4,10 @@
 - [x] Reference Link Downloader
     - [x] Download reference link for every 15 mins
     - [x] Save data to Pravega platform
-- [ ] GDELT Raw Data Downloader
+- [x] GDELT Raw Data Downloader
     - [x] Read data from Pravega platform 
     - [x] Download raw data
-    - [ ] Save data back to pravega
+    - [x] Save data back to pravega/kafka
 - [ ] A Simple Data Consumer
     - [ ] Listen new data from pravega 
     - [ ] Read data from pravega 
@@ -41,6 +41,25 @@ Supported by Google Jigsaw, the GDELT Project monitors the world's broadcast, pr
 * `docker pull flink:scala_2.11`
 * `cd references/flink-docker`
 * `docker-compose up`
+
+### Install and run Kafka
+#### Quick start 
+* [Kafka](https://kafka.apache.org/documentation.html#quickstart)
+
+#### Create a new topic
+- Example
+    - `kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 3 --partitions 1 --topic my-replicated-topic`
+
+
+#### Start a producer
+- Example
+    - `kafka-console-producer.sh --broker-list localhost:9092 --topic test`
+
+#### Start a consumer
+- Example
+    - `kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning`
+
+
 
 ### Download dependence via Maven
 ???
