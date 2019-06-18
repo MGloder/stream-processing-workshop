@@ -56,16 +56,17 @@ class GDELTSource(config: Config) extends Serializable {
         }
       }
     } finally zipFile.close()
+    new File(file).delete()
     path + "/" + filename
   }
 
-  def getExportSource(): SourceFunction.SourceContext[String] => Unit = {
+  def getExportSource(tempFolder: String = "/tmp"): SourceFunction.SourceContext[String] => Unit = {
     sc: SourceContext[String] => {
       while(true) {
         val downloadLink = config.getString("gdelt.last_15_minus_reference")
         val exportLink = getExportLink(downloadLink)
         val exportZip = getExportZipFile(exportLink)
-        val exportData = extractExportZip(exportZip, "/tmp")
+        val exportData = extractExportZip(exportZip, tempFolder)
         sc.collect(exportData)
         Thread.sleep(config.getInt("gdelt.interval"))
       }

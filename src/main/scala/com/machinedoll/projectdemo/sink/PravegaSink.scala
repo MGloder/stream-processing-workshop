@@ -1,14 +1,8 @@
 package com.machinedoll.projectdemo.sink
-import java.net.URI
-
-import com.machinedoll.projectdemo.conf.pravega.Constants
-import com.machinedoll.projectdemo.schema.GDELTReferenceLink
-import com.machinedoll.projectdemo.utils.Pravega
+import com.machinedoll.projectdemo.schema.{Export, GDELTReferenceLink}
 import com.typesafe.config.Config
-import io.pravega.client.stream.{ScalingPolicy, StreamConfiguration}
 import io.pravega.connectors.flink.serialization.PravegaSerialization
-import io.pravega.connectors.flink.{FlinkPravegaWriter, PravegaConfig, PravegaEventRouter, PravegaWriterMode}
-import org.apache.flink.api.common.time.Time
+import io.pravega.connectors.flink.{FlinkPravegaWriter, PravegaEventRouter}
 import org.apache.flink.api.java.utils.ParameterTool
 
 class GDELTReferenceLinkPravegaSink(config: Config, params: ParameterTool) extends
@@ -24,10 +18,24 @@ class GDELTReferenceLinkPravegaSink(config: Config, params: ParameterTool) exten
       .withSerializationSchema(PravegaSerialization.serializationFor(classOf[GDELTReferenceLink]))
       .build
   }
+
+  def getExportSink(): FlinkPravegaWriter[Export] = {
+    FlinkPravegaWriter
+      .builder[Export]
+      .withPravegaConfig(pravegaConfig)
+      .forStream(stream)
+      .withEventRouter(GDETLExportRouter)
+      .withSerializationSchema(PravegaSerialization.serializationFor(classOf[Export]))
+      .build
+  }
 }
 
 object GDETLReferenceLinkRouter extends PravegaEventRouter[GDELTReferenceLink] {
   override def getRoutingKey(event: GDELTReferenceLink): String = "fixed_key"
+}
+
+object GDETLExportRouter extends PravegaEventRouter[Export] {
+  override def getRoutingKey(event: Export): String = "event_export_data"
 }
 
 
