@@ -8,13 +8,13 @@
     - [x] Read data from Pravega platform 
     - [x] Download raw data
     - [x] Save data back to pravega/kafka
-- [ ] A Simple Data Consumer
+- [x] A Simple Data Consumer
     - [x] Listen new data from pravega/kafka 
     - [x] Read data from pravega/kafka
     - [ ] Save data to Elasticsearch
-- [ ] Kibana & Elasticsearch 
-    - [ ] Build index
-    - [ ] Do simple analysis
+- [x] Kibana & Elasticsearch 
+    - [x] Build index
+    - [x] Do simple analysis
 
 ## Data Source- GDELT
 ### The GDELT Project
