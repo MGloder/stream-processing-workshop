@@ -1,20 +1,7 @@
 # Stream-processing-workshop
 
 ## Current Status
-- [x] Reference Link Downloader
-    - [x] Download reference link for every 15 mins
-    - [x] Save data to Pravega platform
-- [x] GDELT Raw Data Downloader
-    - [x] Read data from Pravega platform 
-    - [x] Download raw data
-    - [x] Save data back to pravega/kafka
-- [x] A Simple Data Consumer
-    - [x] Listen new data from pravega/kafka 
-    - [x] Read data from pravega/kafka
-    - [ ] Save data to Elasticsearch
-- [x] Kibana & Elasticsearch 
-    - [x] Build index
-    - [x] Do simple analysis
+[Trello Board](https://trello.com/b/Wjp5Rlxt/recommendation-engine)
 
 ## Data Source- GDELT
 ### The GDELT Project
@@ -59,10 +46,11 @@ Supported by Google Jigsaw, the GDELT Project monitors the world's broadcast, pr
 - Example
     - `kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning`
 
+### Run Jobs
+#### Option 4
 
+##### Export Data Producer
+--class com.machinedoll.projectdemo.jobs.option4.ExportDataProducer
 
-### Download dependence via Maven
-???
-
-## Deploy your job to cluster
-???
+##### Export Data Consumer
+--class com.machinedoll.projectdemo.jobs.option4.ExportDataConsumer  
