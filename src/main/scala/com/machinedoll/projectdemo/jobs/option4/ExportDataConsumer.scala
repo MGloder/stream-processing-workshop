@@ -13,6 +13,7 @@ import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.scala._
+import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.connectors.elasticsearch.{ElasticsearchSinkFunction, RequestIndexer}
 import org.apache.flink.streaming.connectors.elasticsearch6.ElasticsearchSink
 import org.apache.http.HttpHost
@@ -26,6 +27,8 @@ object ExportDataConsumer {
     val conf = ConfigFactory.load
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
+
+    env.enableCheckpointing(100, CheckpointingMode.EXACTLY_ONCE)
 
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")

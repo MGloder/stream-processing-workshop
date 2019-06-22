@@ -8,6 +8,7 @@ import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.api.java.io.TextInputFormat
 import org.apache.flink.api.scala._
 import org.apache.flink.core.fs.Path
+import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
@@ -21,6 +22,8 @@ object ExportDataProducer {
     val conf = ConfigFactory.load
 
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
+
+    env.enableCheckpointing(100, CheckpointingMode.EXACTLY_ONCE)
 
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 
