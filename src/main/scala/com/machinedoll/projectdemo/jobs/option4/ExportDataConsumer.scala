@@ -10,12 +10,13 @@ import org.apache.commons.logging.LogFactory
 import org.apache.flink.api.common.functions.RuntimeContext
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.CheckpointingMode
+import org.apache.flink.streaming.api.environment.CheckpointConfig.ExternalizedCheckpointCleanup
+import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.elasticsearch.{ElasticsearchSinkFunction, RequestIndexer}
 import org.apache.flink.streaming.connectors.elasticsearch6.ElasticsearchSink
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.http.HttpHost
 import org.elasticsearch.client.Requests
 
@@ -29,6 +30,8 @@ object ExportDataConsumer {
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 
     env.enableCheckpointing(100, CheckpointingMode.EXACTLY_ONCE)
+
+    env.getCheckpointConfig.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION)
 
     val properties = new Properties()
     properties.setProperty("bootstrap.servers", "localhost:9092")
@@ -112,7 +115,17 @@ object ExportDataConsumer {
           .source(reuslt)
         requestIndexer.add(request)
       }
-    }
+//
+//      override def invoke(txn: TXN, in: IN, context: SinkFunction.Context[_]): Unit = ???
+//
+//      override def beginTransaction(): TXN = ???
+//
+//      override def preCommit(txn: TXN): Unit = ???
+//
+//      override def commit(txn: TXN): Unit = ???
+//
+//      override def abort(txn: TXN): Unit = ???
+//    }
 
     val httpHosts = new util.ArrayList[HttpHost]
     httpHosts.add(new HttpHost("127.0.0.1", 9200, "http"))
@@ -124,9 +137,7 @@ object ExportDataConsumer {
 
     esSinkBuilder.setBulkFlushMaxActions(1)
 
-//    stream.print()
     stream.addSink(esSinkBuilder.build())
-
 
     env.execute("Execute Export Data Consumer")
   }

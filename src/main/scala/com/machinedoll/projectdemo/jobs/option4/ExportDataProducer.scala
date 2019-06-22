@@ -12,6 +12,7 @@ import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer.Semantic
 
 object ExportDataProducer {
   def LOG = LogFactory.getLog(ExportDataProducer.getClass)
@@ -32,14 +33,15 @@ object ExportDataProducer {
     val kafkaSink = new FlinkKafkaProducer[String](
       "localhost:9092",
       "gdelt-topic-example",
-      new SimpleStringSchema
-//      new KeyedSerializationSchema[Export] {
+      new SimpleStringSchema,
+    //      new KeyedSerializationSchema[Export] {
 //        override def serializeKey(t: Export): Array[Byte] = ("\"" + t.GLOBALEVENTID.get.toString + "\"").getBytes()
 //
 //        override def serializeValue(t: Export): Array[Byte] = t.toString.getBytes()
 //
 //        override def getTargetTopic(t: Export): String = null
 //      }
+
     )
 
     kafkaSink.setWriteTimestampToKafka(true)
