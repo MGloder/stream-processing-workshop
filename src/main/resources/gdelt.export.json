@@ -2,7 +2,10 @@
   "export" : {
     "properties" : {
       "GLOBALEVENTID": {"type": "integer"},
-      "SQLDATE": {"type": "date"},
+      "SQLDATE": {
+        "type": "date",
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis"
+      },
       "MonthYear": {"type": "text"},
       "Year": {"type": "integer"},
       "FractionDate": {"type": "float"},

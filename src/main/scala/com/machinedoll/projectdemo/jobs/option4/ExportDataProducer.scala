@@ -12,7 +12,6 @@ import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer.Semantic
 
 object ExportDataProducer {
   def LOG = LogFactory.getLog(ExportDataProducer.getClass)
@@ -24,7 +23,7 @@ object ExportDataProducer {
 
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
 
-    env.enableCheckpointing(100, CheckpointingMode.EXACTLY_ONCE)
+    env.enableCheckpointing(450000, CheckpointingMode.EXACTLY_ONCE)
 
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 

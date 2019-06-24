@@ -1,5 +1,6 @@
 package com.machinedoll.projectdemo.jobs.option4
 
+import java.text.SimpleDateFormat
 import java.util
 import java.util.Properties
 
@@ -29,7 +30,7 @@ object ExportDataConsumer {
     val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
     env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
 
-    env.enableCheckpointing(100, CheckpointingMode.EXACTLY_ONCE)
+    env.enableCheckpointing(450000, CheckpointingMode.EXACTLY_ONCE)
 
     env.getCheckpointConfig.enableExternalizedCheckpoints(ExternalizedCheckpointCleanup.RETAIN_ON_CANCELLATION)
 
@@ -43,10 +44,12 @@ object ExportDataConsumer {
       .flatMap(EventSplitter())
 
     val esSinkConfig: ElasticsearchSinkFunction[Export] = new ElasticsearchSinkFunction[Export] {
+      val dateFormat = new SimpleDateFormat("yyyymmdd")
+      val outputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss")
       def updateJsonObject(t: Export) = {
         val json = new util.HashMap[String, String]()
         json.put("GLOBALEVENTID", t.GLOBALEVENTID.get.toString)
-        json.put("SQLDATE", t.SQLDATE.getOrElse(0).toString)
+        json.put("SQLDATE", outputFormat.format(dateFormat.parse(t.SQLDATE.getOrElse(0).toString)))
         json.put("MonthYear", t.MonthYear.getOrElse(0).toString)
         json.put("Year", t.Year.getOrElse(0).toString)
         json.put("FractionDate", t.FractionDate.getOrElse(0).toString)
