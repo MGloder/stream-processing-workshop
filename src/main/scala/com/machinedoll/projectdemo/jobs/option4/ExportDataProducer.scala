@@ -33,7 +33,7 @@ object ExportDataProducer {
     val kafkaSink = new FlinkKafkaProducer[String](
       "localhost:9092",
       "gdelt-topic-example",
-      new SimpleStringSchema,
+      new SimpleStringSchema
     //      new KeyedSerializationSchema[Export] {
 //        override def serializeKey(t: Export): Array[Byte] = ("\"" + t.GLOBALEVENTID.get.toString + "\"").getBytes()
 //

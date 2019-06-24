@@ -28,6 +28,14 @@ class GDELTSource(config: Config) extends Serializable {
     gdeltReferenceInfo.head.url
   }
 
+  def getAllExportLink(downloadLink: String): List[String] = {
+    Source
+      .fromURL(downloadLink)
+      .mkString
+      .split("\\\n")
+      .toList
+  }
+
   def getExportZipFile(exportLink: String): String = {
     val url = new URL(exportLink)
     val file = new File(FilenameUtils.getName(url.getPath))
@@ -70,6 +78,23 @@ class GDELTSource(config: Config) extends Serializable {
         sc.collect(exportData)
         Thread.sleep(config.getInt("gdelt.interval"))
       }
+    }
+  }
+
+  def getAllExportSource(tempFolder: String = "/tmp"): SourceFunction.SourceContext[String] => Unit = {
+    sc: SourceContext[String] => {
+      val downloadLink = config.getString("gdelt.all_links")
+      val exportLink = getAllExportLink(downloadLink)
+      exportLink
+        .map(s => s.split("\\s"))
+        .filter(s => s.size == 3)
+        .filter(s => s.contains("export"))
+        .map(
+          zipDownloadLink => getExportZipFile(zipDownloadLink(2)))
+        .map(
+          zipFilePath => extractExportZip(zipFilePath, tempFolder)
+        )
+        .map(sc.collect(_))
     }
   }
 }

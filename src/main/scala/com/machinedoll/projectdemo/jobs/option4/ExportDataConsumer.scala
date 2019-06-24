@@ -107,6 +107,7 @@ object ExportDataConsumer {
         json.put("SOURCEURL", t.SOURCEURL.getOrElse(0).toString)
         json
       }
+
       override def process(t: Export, runtimeContext: RuntimeContext, requestIndexer: RequestIndexer): Unit = {
         val reuslt = updateJsonObject(t)
         val request = Requests.indexRequest()
@@ -125,7 +126,7 @@ object ExportDataConsumer {
 //      override def commit(txn: TXN): Unit = ???
 //
 //      override def abort(txn: TXN): Unit = ???
-//    }
+    }
 
     val httpHosts = new util.ArrayList[HttpHost]
     httpHosts.add(new HttpHost("127.0.0.1", 9200, "http"))
