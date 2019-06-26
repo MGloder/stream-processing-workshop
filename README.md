@@ -46,6 +46,17 @@ Supported by Google Jigsaw, the GDELT Project monitors the world's broadcast, pr
 - Example
     - `kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning`
 
+### Install and run Druid
+#### Download Druid
+- [Download Link](https://druid.apache.org/downloads)
+
+#### Run Druid
+
+```$bash
+bin/supervise -c quickstart/tutorial/conf/tutorial-cluster.conf
+```
+`modify tutorial-cluster.conf as desired`
+
 ### Run Jobs
 #### Option 4
 

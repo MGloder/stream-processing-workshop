@@ -1,4 +1,4 @@
-package com.machinedoll.projectdemo.jobs.option4
+package com.machinedoll.projectdemo.jobs.flink_kafka_example.streaming
 
 import com.machinedoll.projectdemo.jobs.gdelt.source.GDELTSource
 import com.typesafe.config.ConfigFactory
@@ -6,12 +6,12 @@ import org.apache.commons.logging.LogFactory
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.common.serialization.SimpleStringSchema
 import org.apache.flink.api.java.io.TextInputFormat
-import org.apache.flink.api.scala._
 import org.apache.flink.core.fs.Path
 import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer
+import org.apache.flink.api.scala._
 
 object ExportDataProducer {
   def LOG = LogFactory.getLog(ExportDataProducer.getClass)
@@ -56,5 +56,3 @@ object ExportDataProducer {
     env.execute("Download Export Data")
   }
 }
-
-

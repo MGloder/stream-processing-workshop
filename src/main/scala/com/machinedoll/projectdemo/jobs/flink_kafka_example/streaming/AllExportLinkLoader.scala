@@ -1,4 +1,4 @@
-package com.machinedoll.projectdemo.jobs.option4
+package com.machinedoll.projectdemo.jobs.flink_kafka_example.streaming
 
 import com.machinedoll.projectdemo.jobs.gdelt.source.GDELTSource
 import com.typesafe.config.ConfigFactory

@@ -1,55 +1,10 @@
 package com.machinedoll.projectdemo.jobs.gdelt.source
 
 import com.machinedoll.projectdemo.schema.Export
-import com.machinedoll.projectdemo.sink.GDELTReferenceLinkPravegaSink
-import com.typesafe.config.ConfigFactory
-import org.apache.commons.logging.LogFactory
 import org.apache.flink.api.common.functions.FlatMapFunction
-import org.apache.flink.api.common.restartstrategy.RestartStrategies
-import org.apache.flink.api.common.typeinfo.TypeInformation
-import org.apache.flink.api.java.io.TextInputFormat
-import org.apache.flink.api.java.utils.ParameterTool
-import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
-import org.apache.flink.api.scala._
-import org.apache.flink.core.fs.Path
-import org.apache.flink.streaming.api.functions.source.FileProcessingMode
 import org.apache.flink.util.Collector
 
 import scala.util.Try
-
-object ExportData {
-  def LOG = LogFactory.getLog(ExportData.getClass)
-
-  def main(args: Array[String]): Unit = {
-    LOG.info("Starting Download Export Data...")
-
-    val conf = ConfigFactory.load
-
-    val env: StreamExecutionEnvironment = StreamExecutionEnvironment.getExecutionEnvironment
-
-    env.setRestartStrategy(RestartStrategies.fixedDelayRestart(1, 0L))
-
-    val tempFolder = "/Users/xyan/Data/GDELT"
-    val exportSource = new GDELTSource(conf).getExportSource(tempFolder)
-
-    env
-      .addSource(exportSource)
-      .print()
-
-    val format: TextInputFormat = new TextInputFormat(new Path(tempFolder))
-    val GDETLSink = new GDELTReferenceLinkPravegaSink(conf, ParameterTool.fromArgs(args)).getExportSink()
-
-    val text = env.readFile(format, tempFolder, FileProcessingMode.PROCESS_CONTINUOUSLY, conf.getLong("gdelt.dir.interval"))
-    val eventExportData = text.flatMap(EventSplitter())
-//        .print()
-//    eventExportData.addSink(GDETLSink)
-//    inputStream.addSink(GDETLSink)
-
-//    inputStream.writeAsText("/tmp/processed").setParallelism(1)
-
-    env.execute("Download Export Data")
-  }
-}
 
 case class EventSplitter() extends FlatMapFunction[String, Export]{
   def Int(s: String) = Try(s.toInt).toOption

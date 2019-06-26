@@ -1,4 +1,4 @@
-package com.machinedoll.projectdemo.jobs.option4
+package com.machinedoll.projectdemo.jobs.flink_kafka_example.streaming
 
 import java.text.SimpleDateFormat
 import java.util
@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory
 import org.apache.flink.api.common.functions.RuntimeContext
 import org.apache.flink.api.common.restartstrategy.RestartStrategies
 import org.apache.flink.api.common.serialization.SimpleStringSchema
-import org.apache.flink.api.scala._
 import org.apache.flink.streaming.api.CheckpointingMode
 import org.apache.flink.streaming.api.environment.CheckpointConfig.ExternalizedCheckpointCleanup
 import org.apache.flink.streaming.api.scala.StreamExecutionEnvironment
@@ -20,7 +19,7 @@ import org.apache.flink.streaming.connectors.elasticsearch6.ElasticsearchSink
 import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer
 import org.apache.http.HttpHost
 import org.elasticsearch.client.Requests
-
+import org.apache.flink.api.scala._
 
 object ExportDataConsumer {
   def LOG = LogFactory.getLog(ExportDataConsumer.getClass)

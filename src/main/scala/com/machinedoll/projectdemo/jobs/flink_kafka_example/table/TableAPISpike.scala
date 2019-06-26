@@ -1,4 +1,4 @@
-package com.machinedoll.projectdemo.jobs.table
+package com.machinedoll.projectdemo.jobs.flink_kafka_example.table
 
 import java.util.Properties
 
